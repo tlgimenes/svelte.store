@@ -1,0 +1,7 @@
+fragment Breadcrumb_breadcrumbList on StoreBreadcrumbList {
+	itemListElement {
+		item
+		name
+		position
+	}
+}

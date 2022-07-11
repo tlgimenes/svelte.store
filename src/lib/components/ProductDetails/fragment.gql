@@ -1,0 +1,44 @@
+fragment ProductDetails_product on StoreProduct {
+	id: productID
+	sku
+	name
+	gtin
+	description
+
+	isVariantOf {
+		productGroupID
+		name
+	}
+
+	image {
+		url
+		alternateName
+	}
+
+	brand {
+		name
+	}
+
+	offers {
+		lowPrice
+		offers {
+			availability
+			price
+			listPrice
+			seller {
+				identifier
+			}
+		}
+	}
+
+	breadcrumbList {
+		...Breadcrumb_breadcrumbList
+	}
+
+	additionalProperty {
+		propertyID
+		name
+		value
+		valueReference
+	}
+}

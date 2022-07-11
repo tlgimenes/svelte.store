@@ -1,0 +1,22 @@
+overwrite: true
+schema: http://0.0.0.0:3000/api/graphql
+documents:
+  - ./src/**/*.{gql,ts}
+config:
+generates:
+  ./src/lib/server/types.ts:
+    config:
+      preResolveTypes: true
+      avoidOptionals: true
+      enumsAsTypes: true
+      skipTypeNameForRoot: true
+      skipTypename: true
+      allowEnumStringTypes: false
+      namingConvention: 'change-case-all#pascalCase'
+      exportFragmentSpreadSubTypes: true
+    plugins:
+      - typescript
+      - typescript-operations
+  # ./@generated/graphql/persisted.json:
+  #   plugins:
+  #     - '@faststore/graphql-utils/codegen'
