@@ -39,4 +39,8 @@ export const run = async <
     operationName,
   }) as Promise<ExecutionResult<D>>;
 
-export const gql = (query: TemplateStringsArray) => parse(query.toString());
+export const gql = (query: TemplateStringsArray) => {
+  const partialDoc = parse(query.toString())
+
+  
+};

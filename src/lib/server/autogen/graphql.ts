@@ -1,3 +1,5 @@
+/* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -10,6 +12,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A string or the string representation of an object (a stringified object). */
   ObjectOrString: any;
 };
 
@@ -77,7 +80,7 @@ export type IStorePerson = {
 /** Product input. Products are variants within product groups, equivalent to VTEX [SKUs](https://help.vtex.com/en/tutorial/what-is-an-sku--1K75s4RXAQyOuGUYKMM68u#). For example, you may have a **Shirt** product group with associated products such as **Blue shirt size L**, **Green shirt size XL** and so on. */
 export type IStoreProduct = {
   /** Custom Product Additional Properties. */
-  additionalProperty: InputMaybe<Array<IStorePropertyValue>>;
+  additionalProperty?: InputMaybe<Array<IStorePropertyValue>>;
   /** Array of product images. */
   image: Array<IStoreImage>;
   /** Product name. */
@@ -90,7 +93,7 @@ export type IStorePropertyValue = {
   /** Property name. */
   name: Scalars['String'];
   /** Property id. This propert changes according to the content of the object. */
-  propertyID: InputMaybe<Scalars['String']>;
+  propertyID?: InputMaybe<Scalars['String']>;
   /** Property value. May hold a string or the string representation of an object. */
   value: Scalars['ObjectOrString'];
   /** Specifies the nature of the value */
@@ -108,7 +111,7 @@ export type IStoreSelectedFacet = {
 /** Session input. */
 export type IStoreSession = {
   /** Session input channel. */
-  channel: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']>;
   /** Session input country. */
   country: Scalars['String'];
   /** Session input currency. */
@@ -116,16 +119,17 @@ export type IStoreSession = {
   /** Session input locale. */
   locale: Scalars['String'];
   /** Session input postal code. */
-  person: InputMaybe<IStorePerson>;
+  person?: InputMaybe<IStorePerson>;
   /** Session input postal code. */
-  postalCode: InputMaybe<Scalars['String']>;
+  postalCode?: InputMaybe<Scalars['String']>;
 };
 
 export type Mutation = {
+  __typename?: 'Mutation';
   /** Checks for changes between the cart presented in the UI and the cart stored in the ecommerce platform. If changes are detected, it returns the cart stored on the platform. Otherwise, it returns `null`. */
-  validateCart: Maybe<StoreCart>;
+  validateCart?: Maybe<StoreCart>;
   /** Updates a web session with the specified values. */
-  validateSession: Maybe<StoreSession>;
+  validateSession?: Maybe<StoreSession>;
 };
 
 
@@ -140,6 +144,7 @@ export type MutationValidateSessionArgs = {
 };
 
 export type Query = {
+  __typename?: 'Query';
   /** Returns information about all collections. */
   allCollections: StoreCollectionConnection;
   /** Returns information about all products. */
@@ -154,13 +159,13 @@ export type Query = {
 
 
 export type QueryAllCollectionsArgs = {
-  after: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
 };
 
 
 export type QueryAllProductsArgs = {
-  after: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
 };
 
@@ -176,15 +181,16 @@ export type QueryProductArgs = {
 
 
 export type QuerySearchArgs = {
-  after: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
-  selectedFacets: InputMaybe<Array<IStoreSelectedFacet>>;
+  selectedFacets?: InputMaybe<Array<IStoreSelectedFacet>>;
   sort?: InputMaybe<StoreSort>;
   term?: InputMaybe<Scalars['String']>;
 };
 
 /** Aggregate offer information, for a given SKU that is available to be fulfilled by multiple sellers. */
 export type StoreAggregateOffer = {
+  __typename?: 'StoreAggregateOffer';
   /** Highest price among all sellers. */
   highPrice: Scalars['Float'];
   /** Lowest price among all sellers. */
@@ -199,6 +205,7 @@ export type StoreAggregateOffer = {
 
 /** Average rating, based on multiple ratings or reviews. */
 export type StoreAggregateRating = {
+  __typename?: 'StoreAggregateRating';
   /** Value of the aggregate rating. */
   ratingValue: Scalars['Float'];
   /** Total number of ratings. */
@@ -207,18 +214,21 @@ export type StoreAggregateRating = {
 
 /** information about the author of a product review or rating. */
 export type StoreAuthor = {
+  __typename?: 'StoreAuthor';
   /** Author name. */
   name: Scalars['String'];
 };
 
 /** Brand of a given product. */
 export type StoreBrand = {
+  __typename?: 'StoreBrand';
   /** Brand name. */
   name: Scalars['String'];
 };
 
 /** List of items consisting of chain linked web pages, ending with the current page. */
 export type StoreBreadcrumbList = {
+  __typename?: 'StoreBreadcrumbList';
   /** Array with breadcrumb elements. */
   itemListElement: Array<StoreListItem>;
   /** Number of breadcrumbs in the list. */
@@ -227,6 +237,7 @@ export type StoreBreadcrumbList = {
 
 /** Shopping cart information. */
 export type StoreCart = {
+  __typename?: 'StoreCart';
   /** List of shopping cart messages. */
   messages: Array<StoreCartMessage>;
   /** Order information, including `orderNumber` and `acceptedOffer`. */
@@ -235,6 +246,7 @@ export type StoreCart = {
 
 /** Shopping cart message. */
 export type StoreCartMessage = {
+  __typename?: 'StoreCartMessage';
   /** Shopping cart message status, which can be `INFO`, `WARNING` or `ERROR`. */
   status: StoreStatus;
   /** Shopping cart message text. */
@@ -243,6 +255,7 @@ export type StoreCartMessage = {
 
 /** Product collection information. */
 export type StoreCollection = {
+  __typename?: 'StoreCollection';
   /** List of items consisting of chain linked web pages, ending with the current page. */
   breadcrumbList: StoreBreadcrumbList;
   /** Collection ID. */
@@ -259,6 +272,7 @@ export type StoreCollection = {
 
 /** Collection connections, including pagination information and collections returned by the query. */
 export type StoreCollectionConnection = {
+  __typename?: 'StoreCollectionConnection';
   /** Array with collection connection page edges, each containing a collection and a corresponding cursor.. */
   edges: Array<StoreCollectionEdge>;
   /** Collection pagination information. */
@@ -267,6 +281,7 @@ export type StoreCollectionConnection = {
 
 /** Each collection edge contains a `node`, with product collection information, and a `cursor`, that can be used as a reference for pagination. */
 export type StoreCollectionEdge = {
+  __typename?: 'StoreCollectionEdge';
   /** Collection cursor. Used as pagination reference. */
   cursor: Scalars['String'];
   /** Each collection node contains the information of a product collection returned by the query. */
@@ -275,6 +290,7 @@ export type StoreCollectionEdge = {
 
 /** Product collection facet, used for search. */
 export type StoreCollectionFacet = {
+  __typename?: 'StoreCollectionFacet';
   /** Facet key. */
   key: Scalars['String'];
   /** Facet value. */
@@ -283,23 +299,26 @@ export type StoreCollectionFacet = {
 
 /** Collection meta information. Used for search. */
 export type StoreCollectionMeta = {
+  __typename?: 'StoreCollectionMeta';
   /** List of selected collection facets. */
   selectedFacets: Array<StoreCollectionFacet>;
 };
 
 /** Product collection type. Possible values are `Department`, `Category`, `Brand` or `Cluster`. */
-export type StoreCollectionType =
+export enum StoreCollectionType {
   /** Product brand. */
-  | 'Brand'
+  Brand = 'Brand',
   /** Second level of product categorization. */
-  | 'Category'
+  Category = 'Category',
   /** Product cluster. */
-  | 'Cluster'
+  Cluster = 'Cluster',
   /** First level of product categorization. */
-  | 'Department';
+  Department = 'Department'
+}
 
 /** Currency information. */
 export type StoreCurrency = {
+  __typename?: 'StoreCurrency';
   /** Currency code (e.g: USD). */
   code: Scalars['String'];
   /** Currency symbol (e.g: $). */
@@ -310,6 +329,7 @@ export type StoreFacet = StoreFacetBoolean | StoreFacetRange;
 
 /** Search facet boolean information. */
 export type StoreFacetBoolean = {
+  __typename?: 'StoreFacetBoolean';
   /** Facet key. */
   key: Scalars['String'];
   /** Facet label. */
@@ -320,6 +340,7 @@ export type StoreFacetBoolean = {
 
 /** Search facet range information. */
 export type StoreFacetRange = {
+  __typename?: 'StoreFacetRange';
   /** Facet key. */
   key: Scalars['String'];
   /** Facet label. */
@@ -331,14 +352,16 @@ export type StoreFacetRange = {
 };
 
 /** Search facet type. */
-export type StoreFacetType =
+export enum StoreFacetType {
   /** Indicates boolean search facet. */
-  | 'BOOLEAN'
+  Boolean = 'BOOLEAN',
   /** Indicates range type search facet. */
-  | 'RANGE';
+  Range = 'RANGE'
+}
 
 /** Information of a specific facet value. */
 export type StoreFacetValueBoolean = {
+  __typename?: 'StoreFacetValueBoolean';
   /** Facet value label. */
   label: Scalars['String'];
   /** Number of items with this facet. */
@@ -351,6 +374,7 @@ export type StoreFacetValueBoolean = {
 
 /** Search facet range value information. Used for minimum and maximum range values. */
 export type StoreFacetValueRange = {
+  __typename?: 'StoreFacetValueRange';
   /** Search facet range absolute value. */
   absolute: Scalars['Float'];
   /** Search facet range selected value. */
@@ -359,6 +383,7 @@ export type StoreFacetValueRange = {
 
 /** Image. */
 export type StoreImage = {
+  __typename?: 'StoreImage';
   /** Alias for the image. */
   alternateName: Scalars['String'];
   /** Image URL. */
@@ -367,6 +392,7 @@ export type StoreImage = {
 
 /** Item of a list. */
 export type StoreListItem = {
+  __typename?: 'StoreListItem';
   /** List item value. */
   item: Scalars['String'];
   /** Name of the list item. */
@@ -377,6 +403,7 @@ export type StoreListItem = {
 
 /** Offer information. */
 export type StoreOffer = {
+  __typename?: 'StoreOffer';
   /** Offer item availability. */
   availability: Scalars['String'];
   /** Offer item condition. */
@@ -401,6 +428,7 @@ export type StoreOffer = {
 
 /** Information of a specific order. */
 export type StoreOrder = {
+  __typename?: 'StoreOrder';
   /** Array with information on each accepted offer. */
   acceptedOffer: Array<StoreOffer>;
   /** ID of the order in [VTEX order management](https://help.vtex.com/en/tutorial/license-manager-resources-oms--60QcBsvWeum02cFi3GjBzg#). */
@@ -409,12 +437,14 @@ export type StoreOrder = {
 
 /** Organization. */
 export type StoreOrganization = {
+  __typename?: 'StoreOrganization';
   /** Organization ID. */
   identifier: Scalars['String'];
 };
 
 /** Whenever you make a query that allows for pagination, such as `allProducts` or `allCollections`, you can check `StorePageInfo` to learn more about the complete set of items and use it to paginate your queries. */
 export type StorePageInfo = {
+  __typename?: 'StorePageInfo';
   /** Cursor corresponding to the last possible item. */
   endCursor: Scalars['String'];
   /** Indicates whether there is at least one more page with items after the ones returned in the current query. */
@@ -429,6 +459,7 @@ export type StorePageInfo = {
 
 /** Client profile data. */
 export type StorePerson = {
+  __typename?: 'StorePerson';
   /** Client email. */
   email: Scalars['String'];
   /** Client last name. */
@@ -441,6 +472,7 @@ export type StorePerson = {
 
 /** Product information. Products are variants within product groups, equivalent to VTEX [SKUs](https://help.vtex.com/en/tutorial/what-is-an-sku--1K75s4RXAQyOuGUYKMM68u#). For example, you may have a **Shirt** product group with associated products such as **Blue shirt size L**, **Green shirt size XL** and so on. */
 export type StoreProduct = {
+  __typename?: 'StoreProduct';
   /** Array of additional properties. */
   additionalProperty: Array<StorePropertyValue>;
   /** Aggregate ratings data. */
@@ -475,6 +507,7 @@ export type StoreProduct = {
 
 /** Product connections, including pagination information and products returned by the query. */
 export type StoreProductConnection = {
+  __typename?: 'StoreProductConnection';
   /** Array with product connection edges, each containing a product and a corresponding cursor. */
   edges: Array<StoreProductEdge>;
   /** Product pagination information. */
@@ -483,6 +516,7 @@ export type StoreProductConnection = {
 
 /** Each product edge contains a `node`, with product information, and a `cursor`, that can be used as a reference for pagination. */
 export type StoreProductEdge = {
+  __typename?: 'StoreProductEdge';
   /** Product cursor. Used as pagination reference. */
   cursor: Scalars['String'];
   /** Each product node contains the information of a product returned by the query. */
@@ -491,6 +525,7 @@ export type StoreProductEdge = {
 
 /** Product group information. Product groups are catalog entities that may contain variants. They are equivalent to VTEX [Products](https://help.vtex.com/en/tutorial/what-is-a-product--2zrB2gFCHyQokCKKE8kuAw#), whereas each variant is equivalent to a VTEX [SKU](https://help.vtex.com/en/tutorial/what-is-an-sku--1K75s4RXAQyOuGUYKMM68u#). For example, you may have a **Shirt** product group with associated products such as **Blue shirt size L**, **Green shirt size XL** and so on. */
 export type StoreProductGroup = {
+  __typename?: 'StoreProductGroup';
   /** Array of additional properties. */
   additionalProperty: Array<StorePropertyValue>;
   /** Array of variants related to product group. Variants are equivalent to VTEX [SKUs](https://help.vtex.com/en/tutorial/what-is-an-sku--1K75s4RXAQyOuGUYKMM68u#). */
@@ -503,6 +538,7 @@ export type StoreProductGroup = {
 
 /** Properties that can be associated with products and products groups. */
 export type StorePropertyValue = {
+  __typename?: 'StorePropertyValue';
   /** Property name. */
   name: Scalars['String'];
   /** Property id. This propert changes according to the content of the object. */
@@ -515,6 +551,7 @@ export type StorePropertyValue = {
 
 /** Information of a given review. */
 export type StoreReview = {
+  __typename?: 'StoreReview';
   /** Review author. */
   author: StoreAuthor;
   /** Review rating information. */
@@ -523,6 +560,7 @@ export type StoreReview = {
 
 /** Information of a given review rating. */
 export type StoreReviewRating = {
+  __typename?: 'StoreReviewRating';
   /** Best rating value. */
   bestRating: Scalars['Float'];
   /** Rating value. */
@@ -531,6 +569,7 @@ export type StoreReviewRating = {
 
 /** Search result. */
 export type StoreSearchResult = {
+  __typename?: 'StoreSearchResult';
   /** Array of search result facets. */
   facets: Array<StoreFacet>;
   /** Search result products. */
@@ -541,6 +580,7 @@ export type StoreSearchResult = {
 
 /** Search Engine Optimization (SEO) tags data. */
 export type StoreSeo = {
+  __typename?: 'StoreSeo';
   /** Canonical tag. */
   canonical: Scalars['String'];
   /** Description tag. */
@@ -553,8 +593,9 @@ export type StoreSeo = {
 
 /** Session information. */
 export type StoreSession = {
+  __typename?: 'StoreSession';
   /** Session channel. */
-  channel: Maybe<Scalars['String']>;
+  channel?: Maybe<Scalars['String']>;
   /** Session country. */
   country: Scalars['String'];
   /** Session currency. */
@@ -562,38 +603,41 @@ export type StoreSession = {
   /** Session locale. */
   locale: Scalars['String'];
   /** Session postal code. */
-  person: Maybe<StorePerson>;
+  person?: Maybe<StorePerson>;
   /** Session postal code. */
-  postalCode: Maybe<Scalars['String']>;
+  postalCode?: Maybe<Scalars['String']>;
 };
 
 /** Product search results sorting options. */
-export type StoreSort =
+export enum StoreSort {
   /** Sort by discount value, from highest to lowest. */
-  | 'discount_desc'
+  DiscountDesc = 'discount_desc',
   /** Sort by name, in alphabetical order. */
-  | 'name_asc'
+  NameAsc = 'name_asc',
   /** Sort by name, in reverse alphabetical order. */
-  | 'name_desc'
+  NameDesc = 'name_desc',
   /** Sort by orders, from highest to lowest. */
-  | 'orders_desc'
+  OrdersDesc = 'orders_desc',
   /** Sort by price, from lowest to highest. */
-  | 'price_asc'
+  PriceAsc = 'price_asc',
   /** Sort by price, from highest to lowest. */
-  | 'price_desc'
+  PriceDesc = 'price_desc',
   /** Sort by release date, from  highest to lowest. */
-  | 'release_desc'
+  ReleaseDesc = 'release_desc',
   /** Sort by product score, from highest to lowest. */
-  | 'score_desc';
+  ScoreDesc = 'score_desc'
+}
 
 /** Status used to indicate a message type. For instance, a shopping cart informative or error message. */
-export type StoreStatus =
-  | 'ERROR'
-  | 'INFO'
-  | 'WARNING';
+export enum StoreStatus {
+  Error = 'ERROR',
+  Info = 'INFO',
+  Warning = 'WARNING'
+}
 
 /** Suggestion term. */
 export type StoreSuggestionTerm = {
+  __typename?: 'StoreSuggestionTerm';
   /** Its occurrences count. */
   count: Scalars['Int'];
   /** The term. */
@@ -602,19 +646,24 @@ export type StoreSuggestionTerm = {
 
 /** Suggestions information. */
 export type StoreSuggestions = {
+  __typename?: 'StoreSuggestions';
   /** Array with suggestion products' information. */
   products: Array<StoreProduct>;
   /** Array with suggestion terms. */
   terms: Array<StoreSuggestionTerm>;
 };
 
-export type Breadcrumb_BreadcrumbListFragment = { itemListElement: Array<{ item: string, name: string, position: number }> };
+export type Breadcrumb_BreadcrumbListFragment = { __typename?: 'StoreBreadcrumbList', itemListElement: Array<{ __typename?: 'StoreListItem', item: string, name: string, position: number }> };
 
-export type ProductDetails_ProductFragment = { sku: string, name: string, gtin: string, description: string, id: string, isVariantOf: { productGroupID: string, name: string }, image: Array<{ url: string, alternateName: string }>, brand: { name: string }, offers: { lowPrice: number, offers: Array<{ availability: string, price: number, listPrice: number, seller: { identifier: string } }> }, breadcrumbList: { itemListElement: Array<{ item: string, name: string, position: number }> }, additionalProperty: Array<{ propertyID: string, name: string, value: any, valueReference: string }> };
+export type ProductDetails_ProductFragment = { __typename?: 'StoreProduct', sku: string, name: string, gtin: string, description: string, id: string, isVariantOf: { __typename?: 'StoreProductGroup', productGroupID: string, name: string }, image: Array<{ __typename?: 'StoreImage', url: string, alternateName: string }>, brand: { __typename?: 'StoreBrand', name: string }, offers: { __typename?: 'StoreAggregateOffer', lowPrice: number, offers: Array<{ __typename?: 'StoreOffer', availability: string, price: number, listPrice: number, seller: { __typename?: 'StoreOrganization', identifier: string } }> }, breadcrumbList: { __typename?: 'StoreBreadcrumbList', itemListElement: Array<{ __typename?: 'StoreListItem', item: string, name: string, position: number }> }, additionalProperty: Array<{ __typename?: 'StorePropertyValue', propertyID: string, name: string, value: any, valueReference: string }> };
 
 export type GetProductQueryVariables = Exact<{
   locator: Array<IStoreSelectedFacet> | IStoreSelectedFacet;
 }>;
 
 
-export type GetProductQuery = { product: { sku: string, gtin: string, name: string, description: string, id: string, seo: { title: string, description: string, canonical: string }, breadcrumbList: { itemListElement: Array<{ item: string, name: string, position: number }> }, brand: { name: string }, image: Array<{ url: string, alternateName: string }>, offers: { lowPrice: number, highPrice: number, priceCurrency: string, offers: Array<{ availability: string, price: number, priceValidUntil: string, priceCurrency: string, itemCondition: string, listPrice: number, seller: { identifier: string } }> }, isVariantOf: { productGroupID: string, name: string }, additionalProperty: Array<{ propertyID: string, name: string, value: any, valueReference: string }> } };
+export type GetProductQuery = { __typename?: 'Query', product: { __typename?: 'StoreProduct', sku: string, gtin: string, name: string, description: string, id: string, seo: { __typename?: 'StoreSeo', title: string, description: string, canonical: string }, breadcrumbList: { __typename?: 'StoreBreadcrumbList', itemListElement: Array<{ __typename?: 'StoreListItem', item: string, name: string, position: number }> }, brand: { __typename?: 'StoreBrand', name: string }, image: Array<{ __typename?: 'StoreImage', url: string, alternateName: string }>, offers: { __typename?: 'StoreAggregateOffer', lowPrice: number, highPrice: number, priceCurrency: string, offers: Array<{ __typename?: 'StoreOffer', availability: string, price: number, priceValidUntil: string, priceCurrency: string, itemCondition: string, listPrice: number, seller: { __typename?: 'StoreOrganization', identifier: string } }> }, isVariantOf: { __typename?: 'StoreProductGroup', productGroupID: string, name: string }, additionalProperty: Array<{ __typename?: 'StorePropertyValue', propertyID: string, name: string, value: any, valueReference: string }> } };
+
+export const Breadcrumb_BreadcrumbListFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Breadcrumb_breadcrumbList"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"StoreBreadcrumbList"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"itemListElement"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"item"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"position"}}]}}]}}]} as unknown as DocumentNode<Breadcrumb_BreadcrumbListFragment, unknown>;
+export const ProductDetails_ProductFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProductDetails_product"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"StoreProduct"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"productID"}},{"kind":"Field","name":{"kind":"Name","value":"sku"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"gtin"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"isVariantOf"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"productGroupID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"alternateName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"brand"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"offers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lowPrice"}},{"kind":"Field","name":{"kind":"Name","value":"offers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availability"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"listPrice"}},{"kind":"Field","name":{"kind":"Name","value":"seller"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"identifier"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"breadcrumbList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Breadcrumb_breadcrumbList"}}]}},{"kind":"Field","name":{"kind":"Name","value":"additionalProperty"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"propertyID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"value"}},{"kind":"Field","name":{"kind":"Name","value":"valueReference"}}]}}]}},...Breadcrumb_BreadcrumbListFragmentDoc.definitions]} as unknown as DocumentNode<ProductDetails_ProductFragment, unknown>;
+export const GetProductDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProduct"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"locator"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IStoreSelectedFacet"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"product"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"locator"},"value":{"kind":"Variable","name":{"kind":"Name","value":"locator"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"productID"}},{"kind":"Field","name":{"kind":"Name","value":"seo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"canonical"}}]}},{"kind":"Field","name":{"kind":"Name","value":"breadcrumbList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"itemListElement"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"item"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"position"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"brand"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sku"}},{"kind":"Field","name":{"kind":"Name","value":"gtin"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"alternateName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"offers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lowPrice"}},{"kind":"Field","name":{"kind":"Name","value":"highPrice"}},{"kind":"Field","name":{"kind":"Name","value":"priceCurrency"}},{"kind":"Field","name":{"kind":"Name","value":"offers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availability"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"priceValidUntil"}},{"kind":"Field","name":{"kind":"Name","value":"priceCurrency"}},{"kind":"Field","name":{"kind":"Name","value":"itemCondition"}},{"kind":"Field","name":{"kind":"Name","value":"seller"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"identifier"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"isVariantOf"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"productGroupID"}}]}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"ProductDetails_product"}}]}}]}},...ProductDetails_ProductFragmentDoc.definitions]} as unknown as DocumentNode<GetProductQuery, GetProductQueryVariables>;

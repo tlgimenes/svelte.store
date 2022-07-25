@@ -1,9 +1,9 @@
 {
   "name": "svelte.store",
   "version": "0.0.1",
-	"type": "module",
-	"license": "MIT",
-	"scripts": {
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
     "dev": "vite dev",
     "build": "vite build",
     "package": "svelte-kit package",
@@ -13,17 +13,19 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check --plugin-search-dir=. . && eslint .",
     "format": "prettier --write --plugin-search-dir=. .",
-		"generate": "graphql-codegen"
+    "generate": "graphql-codegen"
   },
-	"dependencies": {
+  "dependencies": {
     "@faststore/api": "^1.10.8",
     "@faststore/sdk": "^1.10.6",
+    "@graphql-typed-document-node/core": "^3.1.1",
     "graphql": "^16.5.0"
   },
   "devDependencies": {
-		"@graphql-codegen/cli": "^2.8.0",
-		"@graphql-codegen/typescript": "^2.7.1",
-		"@graphql-codegen/typescript-operations": "^2.5.1",
+    "@graphql-codegen/gql-tag-operations-preset": "^1.5.2",
+    "@graphql-codegen/cli": "^2.8.0",
+    "@graphql-codegen/typescript": "^2.7.1",
+    "@graphql-codegen/typescript-operations": "^2.5.1",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@typescript-eslint/eslint-plugin": "^5.27.0",

@@ -4,19 +4,18 @@ documents:
   - ./src/**/*.{gql,ts}
 config:
 generates:
-  ./src/lib/server/types.ts:
-    config:
-      preResolveTypes: true
-      avoidOptionals: true
-      enumsAsTypes: true
-      skipTypeNameForRoot: true
-      skipTypename: true
-      allowEnumStringTypes: false
-      namingConvention: 'change-case-all#pascalCase'
-      exportFragmentSpreadSubTypes: true
-    plugins:
-      - typescript
-      - typescript-operations
-  # ./@generated/graphql/persisted.json:
+  # ./src/lib/server/autogen.ts:
+  #   config:
+  #     preResolveTypes: true
+  #     avoidOptionals: true
+  #     enumsAsTypes: true
+  #     skipTypeNameForRoot: true
+  #     skipTypename: true
+  #     allowEnumStringTypes: false
+  #     namingConvention: 'change-case-all#pascalCase'
+  #     exportFragmentSpreadSubTypes: true
   #   plugins:
-  #     - '@faststore/graphql-utils/codegen'
+  #     - typescript
+  #     - typescript-operations
+  ./src/lib/server/autogen:
+    preset: gql-tag-operations-preset

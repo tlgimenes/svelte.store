@@ -1,18 +1,12 @@
-import { gql, run } from "$lib/server/graphql";
+import { gql } from "$lib/server/autogen";
+import { run } from "$lib/server/graphql";
 import { isNotFoundError } from "@faststore/api";
 
-import type {
-  GetProductQuery,
-  GetProductQueryVariables,
-} from "$lib/server/types";
 import type { RequestHandler } from "@sveltejs/kit";
 
 export const get: RequestHandler = async ({ params: { slug } }) => {
-  const { data, errors = [] } = await run<
-    GetProductQuery,
-    GetProductQueryVariables
-  >({
-    query: gql`
+  const { data, errors = [] } = await run({
+    query: gql(`
       query GetProduct($locator: [IStoreSelectedFacet!]!) {
         product(locator: $locator) {
           id: productID
@@ -67,7 +61,7 @@ export const get: RequestHandler = async ({ params: { slug } }) => {
 
           ...ProductDetails_product
         }
-    }`,
+    }`),
     variables: {
       locator: [
         { key: "slug", value: slug },
