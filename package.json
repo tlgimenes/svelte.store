@@ -8,7 +8,6 @@
     "build": "vite build",
     "package": "svelte-kit package",
     "preview": "vite preview",
-    "prepare": "svelte-kit sync",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check --plugin-search-dir=. . && eslint .",
@@ -18,12 +17,12 @@
   "dependencies": {
     "@faststore/api": "^1.10.8",
     "@faststore/sdk": "^1.10.6",
-    "@graphql-typed-document-node/core": "^3.1.1",
     "graphql": "^16.5.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.8.0",
-    "@graphql-codegen/gql-tag-operations-preset": "^1.5.2",
+    "@graphql-codegen/cli": "^2.11.6",
+    "@graphql-codegen/gql-tag-operations-preset": "^1.5.4",
+    "@graphql-typed-document-node/core": "^3.1.1",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
@@ -39,8 +38,7 @@
     "svelte-check": "^2.7.1",
     "svelte-preprocess": "^4.10.6",
     "tailwindcss": "^3.1.5",
-    "tslib": "^2.3.1",
     "typescript": "^4.7.4",
-    "vite": "^2.9.13"
+    "vite": "^3.0.8"
   }
 }

@@ -12,8 +12,78 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /**
+   * Example:
+   *
+   * ```json
+   * {
+   *   Color: 'Red', Size: '42'
+   * }
+   * ```
+   */
+  ActiveVariations: any;
+  /**
+   * Example:
+   *
+   * ```json
+   * {
+   *   Color: [
+   *     {
+   *       src: "https://storecomponents.vtexassets.com/...",
+   *       alt: "...",
+   *       label: "...",
+   *       value: "..."
+   *     },
+   *     {
+   *       src: "https://storecomponents.vtexassets.com/...",
+   *       alt: "...",
+   *       label: "...",
+   *       value: "..."
+   *     }
+   *   ],
+   *   Size: [
+   *     {
+   *       src: "https://storecomponents.vtexassets.com/...",
+   *       alt: "...",
+   *       label: "...",
+   *       value: "..."
+   *     }
+   *   ]
+   * }
+   * ```
+   */
+  FormattedVariants: any;
   /** A string or the string representation of an object (a stringified object). */
   ObjectOrString: any;
+  /**
+   * Example:
+   *
+   * ```json
+   * {
+   *   'Color-Red-Size-40': 'classic-shoes-37'
+   * }
+   * ```
+   */
+  SlugsMap: any;
+  /**
+   * Example:
+   *
+   * ```json
+   * {
+   *   Color: [ "Red", "Blue", "Green" ],
+   *   Size: [ "40", "41" ]
+   * }
+   * ```
+   */
+  VariantsByName: any;
+};
+
+/** Person data input to the newsletter. */
+export type IPersonNewsletter = {
+  /** Person's email. */
+  email: Scalars['String'];
+  /** Person's name. */
+  name: Scalars['String'];
 };
 
 /** Shopping cart input. */
@@ -126,10 +196,17 @@ export type IStoreSession = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Subscribes a new person to the newsletter list. */
+  subscribeToNewsletter?: Maybe<PersonNewsletter>;
   /** Checks for changes between the cart presented in the UI and the cart stored in the ecommerce platform. If changes are detected, it returns the cart stored on the platform. Otherwise, it returns `null`. */
   validateCart?: Maybe<StoreCart>;
   /** Updates a web session with the specified values. */
   validateSession?: Maybe<StoreSession>;
+};
+
+
+export type MutationSubscribeToNewsletterArgs = {
+  data: IPersonNewsletter;
 };
 
 
@@ -141,6 +218,13 @@ export type MutationValidateCartArgs = {
 export type MutationValidateSessionArgs = {
   search: Scalars['String'];
   session: IStoreSession;
+};
+
+/** Newsletter information. */
+export type PersonNewsletter = {
+  __typename?: 'PersonNewsletter';
+  /** Person's ID in the newsletter list. */
+  id: Scalars['String'];
 };
 
 export type Query = {
@@ -186,6 +270,37 @@ export type QuerySearchArgs = {
   selectedFacets?: InputMaybe<Array<IStoreSelectedFacet>>;
   sort?: InputMaybe<StoreSort>;
   term?: InputMaybe<Scalars['String']>;
+};
+
+export type SkuVariants = {
+  __typename?: 'SkuVariants';
+  /** SKU property values for the current SKU. */
+  activeVariations?: Maybe<Scalars['ActiveVariations']>;
+  /** All available options for each SKU variant property, indexed by their name. */
+  allVariantsByName?: Maybe<Scalars['VariantsByName']>;
+  /**
+   * Available options for each varying SKU property, taking into account the
+   * `dominantVariantName` property. Returns all available options for the
+   * dominant property, and only options that can be combined with its current
+   * value for other properties.
+   */
+  availableVariations?: Maybe<Scalars['FormattedVariants']>;
+  /**
+   * Maps property value combinations to their respective SKU's slug. Enables
+   * us to retrieve the slug for the SKU that matches the currently selected
+   * variations in O(1) time.
+   */
+  slugsMap?: Maybe<Scalars['SlugsMap']>;
+};
+
+
+export type SkuVariantsAvailableVariationsArgs = {
+  dominantVariantName: Scalars['String'];
+};
+
+
+export type SkuVariantsSlugsMapArgs = {
+  dominantVariantName: Scalars['String'];
 };
 
 /** Aggregate offer information, for a given SKU that is available to be fulfilled by multiple sellers. */
@@ -304,7 +419,7 @@ export type StoreCollectionMeta = {
   selectedFacets: Array<StoreCollectionFacet>;
 };
 
-/** Product collection type. Possible values are `Department`, `Category`, `Brand` or `Cluster`. */
+/** Product collection type. Possible values are `Department`, `Category`, `Brand`, `Cluster`, `SubCategory` or `Collection`. */
 export enum StoreCollectionType {
   /** Product brand. */
   Brand = 'Brand',
@@ -312,8 +427,12 @@ export enum StoreCollectionType {
   Category = 'Category',
   /** Product cluster. */
   Cluster = 'Cluster',
+  /** Product collection. */
+  Collection = 'Collection',
   /** First level of product categorization. */
-  Department = 'Department'
+  Department = 'Department',
+  /** Third level of product categorization. */
+  SubCategory = 'SubCategory'
 }
 
 /** Currency information. */
@@ -495,6 +614,8 @@ export type StoreProduct = {
   offers: StoreAggregateOffer;
   /** Product ID, such as [ISBN](https://www.isbn-international.org/content/what-isbn) or similar global IDs. */
   productID: Scalars['String'];
+  /** The product's release date. Formatted using https://en.wikipedia.org/wiki/ISO_8601 */
+  releaseDate: Scalars['String'];
   /** Array with review information. */
   review: Array<StoreReview>;
   /** Meta tag data. */
@@ -534,6 +655,12 @@ export type StoreProductGroup = {
   name: Scalars['String'];
   /** Product group ID. */
   productGroupID: Scalars['String'];
+  /**
+   * Object containing data structures to facilitate handling different SKU
+   * variant properties. Specially useful for implementing SKU selection
+   * components.
+   */
+  skuVariants?: Maybe<SkuVariants>;
 };
 
 /** Properties that can be associated with products and products groups. */

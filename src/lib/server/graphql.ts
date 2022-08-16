@@ -1,5 +1,5 @@
 import { getContextFactory, getSchema } from "@faststore/api";
-import { execute, parse } from "graphql";
+import { execute } from "graphql";
 import type { DocumentNode, ExecutionResult } from "graphql";
 import type { Options } from "@faststore/api";
 
@@ -38,9 +38,3 @@ export const run = async <
     contextValue: contextFactory({}),
     operationName,
   }) as Promise<ExecutionResult<D>>;
-
-export const gql = (query: TemplateStringsArray) => {
-  const partialDoc = parse(query.toString())
-
-  
-};
